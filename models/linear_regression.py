@@ -7,6 +7,8 @@ y_train = [2, 4, 6, 8, 10]
 plt.scatter(x_train, y_train)
 
 
+# Once the model has been created, this
+# function is called to produce a prediction (y_hat)
 def predict_value(x, w, b):
     return w * x + b
 
@@ -27,13 +29,16 @@ def configure_plot_settings():
     plt.axvline(0, color="black", linewidth=0.5)
 
 
+# The cost is just the average of all of the squared
+# deltas from the current line to the actual value
+# and then multiplied by 2
 def calculate_cost(w, b):
     errors = []
     for x, y in zip(x_train, y_train):
         y_hat = w * x + b
         delta = y_hat - y
         errors.append(delta**2)
-    return sum(errors) / len(errors) * 2
+    return sum(errors) / (len(errors) * 2)
 
 
 def calculate_derivative_w(w, b):
@@ -50,6 +55,9 @@ def calculate_derivative_b(w, b):
     return sum(deltas) / len(deltas)
 
 
+# Gradient descent attempts to find the optimal localized
+# lowest cost value, thus producting the best approximation
+# of a line that will produce accurate reults.
 def gradient_descent(w, b, a, iterations=1000, tolerance=1e-6):
     i = 0
     while True:
